@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RS Ecommerce API — Home</title>
+  <!-- Tailwind CDN (for Render deployment this is fine) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <div class="max-w-4xl mx-auto mt-16 p-8 bg-white rounded-2xl shadow-lg border border-gray-100">
+    <!-- Header -->
+    <header class="flex items-center space-x-4 mb-8">
+      <div class="bg-gray-900 text-white rounded-full w-12 h-12 flex items-center justify-center text-lg font-semibold">
+        RS
+      </div>
+      <div>
+        <h1 class="text-2xl font-bold">RS Ecommerce API</h1>
+        <p class="text-gray-500">Django REST Backend — running on Render</p>
+      </div>
+    </header>
+
+    <!-- Navigation grid -->
+    <div class="grid gap-6 sm:grid-cols-2">
+      <a href="{% url 'admin:index' %}" class="group block p-5 bg-gray-50 border border-gray-200 rounded-xl hover:bg-gray-100 transition">
+        <h2 class="text-lg font-semibold mb-1 group-hover:text-indigo-600">Admin Dashboard</h2>
+        <p class="text-sm text-gray-500">Manage products, orders, and users.</p>
+      </a>
+
+      <a href="/api/" class="group block p-5 bg-gray-50 border border-gray-200 rounded-xl hover:bg-gray-100 transition">
+        <h2 class="text-lg font-semibold mb-1 group-hover:text-indigo-600">API Root</h2>
+        <p class="text-sm text-gray-500">Explore Django REST Framework endpoints.</p>
+      </a>
+
+      <a href="/api/products/" class="group block p-5 bg-gray-50 border border-gray-200 rounded-xl hover:bg-gray-100 transition">
+        <h2 class="text-lg font-semibold mb-1 group-hover:text-indigo-600">Products</h2>
+        <p class="text-sm text-gray-500">Fetch all available products via API.</p>
+      </a>
+
+      <a href="/health/" class="group block p-5 bg-gray-50 border border-gray-200 rounded-xl hover:bg-gray-100 transition">
+        <h2 class="text-lg font-semibold mb-1 group-hover:text-indigo-600">Health Check</h2>
+        <p class="text-sm text-gray-500">Check API status and uptime.</p>
+      </a>
+    </div>
+
+    <!-- Project info -->
+    <section class="mt-10 border-t pt-6">
+      <h3 class="text-lg font-semibold mb-2">Project Info</h3>
+      <div class="text-sm text-gray-600 space-y-1">
+        <p>Render Service URL: <code class="bg-gray-100 px-2 py-1 rounded">https://ecommerce-projects-9cqe.onrender.com</code></p>
+        <p>Local Service URL: <code class="bg-gray-100 px-2 py-1 rounded">{{ request.get_host }}</code></p>
+        <p>Django version: <code class="bg-gray-100 px-2 py-1 rounded">{{ django_version }}</code></p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-10 text-center text-gray-500 text-sm">
+      <p>Deployed on <a href="https://render.com" class="text-indigo-600 hover:underline" target="_blank">Render</a> • Built with Django & Tailwind</p>
+    </footer>
+  </div>
+</body>
+</html>
