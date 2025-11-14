@@ -1,3 +1,26 @@
+<p align="center">
+  <!-- Tech Stack -->
+  <img src="https://img.shields.io/badge/Django-5.0-green?logo=django&logoColor=white" />
+  <img src="https://img.shields.io/badge/DRF-API-red?logo=django&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vite-Build-purple?logo=vite&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL-DB-blue?logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Stripe-Payments-626CD9?logo=stripe&logoColor=white" />
+  <img src="https://img.shields.io/badge/Cloudinary-Media-3448C5?logo=cloudinary&logoColor=white" />
+</p>
+
+<p align="center">
+  <!-- Deployment -->
+  <img src="https://img.shields.io/badge/Vercel-Frontend-black?logo=vercel&logoColor=white" />
+  <img src="https://img.shields.io/badge/Render-Backend-46E3B7?logo=render&logoColor=white" />
+</p>
+
+<p align="center">
+  <!-- License -->
+  <img src="https://img.shields.io/badge/License-MIT-yellow" />
+</p>
+
 # 🛍️ Full-Stack E-Commerce Platform  
 **Django REST Framework + React + TypeScript + PostgreSQL + Cloudinary + Stripe**
 
