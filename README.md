@@ -1,4 +1,4 @@
-![Django](https://img.shields.io/badge/Django-5.0-green?logo=django&logoColor=white)
+[Django](https://img.shields.io/badge/Django-5.0-green?logo=django&logoColor=white)
 ![DRF](https://img.shields.io/badge/DRF-API-red?logo=django&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white)
@@ -10,6 +10,7 @@
 ![Render](https://img.shields.io/badge/Render-Backend-46E3B7?logo=render&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
+# Hello Ranjeet
 # 🛍️ Full-Stack E-Commerce Platform  
 **Django REST Framework + React + TypeScript + PostgreSQL + Cloudinary + Stripe**
 
