@@ -117,9 +117,13 @@ ecommerce-fullstack-app/
 
 ## 🧩 Architecture Diagram
 
-## 🧩 Architecture Diagram (Image)
+### 🌙 Light Theme:
 
 ![Architecture](docs/architecture_light.png)
+
+### 🌙 Dark Theme:
+
+![Architecture Dark](docs/architecture-dark.png)
 
 ```
 React + TypeScript (Vercel)
