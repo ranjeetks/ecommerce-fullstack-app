@@ -1,5 +1,3 @@
-<p align="center">
-
 ![Django](https://img.shields.io/badge/Django-5.0-green?logo=django&logoColor=white)
 ![DRF](https://img.shields.io/badge/DRF-API-red?logo=django&logoColor=white)
 ![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)
@@ -8,17 +6,9 @@
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-DB-blue?logo=postgresql&logoColor=white)
 ![Stripe](https://img.shields.io/badge/Stripe-Payments-626CD9?logo=stripe&logoColor=white)
 ![Cloudinary](https://img.shields.io/badge/Cloudinary-Media-3448C5?logo=cloudinary&logoColor=white)
-
-<br>
-
 ![Vercel](https://img.shields.io/badge/Vercel-Frontend-black?logo=vercel&logoColor=white)
 ![Render](https://img.shields.io/badge/Render-Backend-46E3B7?logo=render&logoColor=white)
-
-<br>
-
 ![License](https://img.shields.io/badge/License-MIT-yellow)
-
-</p>
 
 # 🛍️ Full-Stack E-Commerce Platform  
 **Django REST Framework + React + TypeScript + PostgreSQL + Cloudinary + Stripe**
