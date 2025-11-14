@@ -119,7 +119,7 @@ ecommerce-fullstack-app/
 
 ## 🧩 Architecture Diagram (Image)
 
-![Architecture](docs/architecture.png)
+![Architecture](docs/architecture_light.png)
 
 ```
 React + TypeScript (Vercel)
