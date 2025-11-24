@@ -253,7 +253,6 @@ VITE_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxx
 
 ---
 
-```md
 ## 🧩 Git Workflow (Professional Branching Model)
 
 flowchart LR
