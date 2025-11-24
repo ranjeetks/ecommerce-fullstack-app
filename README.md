@@ -1,4 +1,8 @@
 <p align="center">
+  <b>Full-Stack E-Commerce • Django REST + React + TypeScript • Deployed on Render & Vercel</b>
+</p>
+
+<p align="center">
   <!-- Tech Stack -->
   <img src="https://img.shields.io/badge/Django-5.0-green?logo=django&logoColor=white" />
   <img src="https://img.shields.io/badge/DRF-API-red?logo=django&logoColor=white" />
@@ -17,12 +21,26 @@
   <img src="https://img.shields.io/badge/License-MIT-yellow" />
 </p>
 
+<p align="center">
+  <img src="docs/screenshots/thumbnail_react_django_E-commerce.png" width="600" alt="Project Thumbnail"/>
+</p>
 
 # 🛍️ Full-Stack E-Commerce Platform  
 **Django REST Framework + React + TypeScript + PostgreSQL + Cloudinary + Stripe**
 
 A complete **production-grade e-commerce system** built using modern technologies and deployed on **Render + Vercel**.  
 Designed for **freelancing**, **portfolio showcase**, and **real-world commercial use**.
+
+---
+
+## 🌍 Live Demo Links
+
+| Service | URL |
+|--------|------|
+| 🖥️ Frontend | **https://ecommerce-frontend-rs.vercel.app** |
+| ⚙️ Backend API | **https://ecommerce-backend-44e1.onrender.com** |
+| 📘 Swagger Docs | **https://ecommerce-backend-44e1.onrender.com/api/schema/swagger-ui/** |
+| ☁️ Cloudinary Media | https://cloudinary.com |
 
 ---
 ## 🌟 Project Preview
@@ -45,17 +63,6 @@ Designed for **freelancing**, **portfolio showcase**, and **real-world commercia
 </div>
 
 ---
-## 🌍 Live Demo Links
-
-| Service | URL |
-|--------|------|
-| 🖥️ Frontend | **https://ecommerce-frontend-rs.vercel.app** |
-| ⚙️ Backend API | **https://ecommerce-backend-44e1.onrender.com** |
-| 📘 Swagger Docs | **https://ecommerce-backend-44e1.onrender.com/api/schema/swagger-ui/** |
-| ☁️ Cloudinary Media | https://cloudinary.com |
-
----
-
 ## 🧩 Project Highlights
 
 ✔ Fully functional **E-commerce workflow**  
@@ -68,6 +75,38 @@ Designed for **freelancing**, **portfolio showcase**, and **real-world commercia
 ✔ Fully deployed on **Vercel + Render**  
 ✔ Clean folder structure + professional documentation  
 
+---
+## 💼 Why This Project Is Valuable
+
+- Shows real-world **full-stack architecture**
+- Includes **payment gateway**, the most in-demand client feature
+- Implements clean **REST API design**
+- Proves experience with **deployment pipelines**
+- Perfect reference for future freelance e-commerce clients
+- Uses modern UI + best practices in React + TS
+
+---
+## ✔️ Feature Checklist
+
+### 👤 User Features
+- Signup, Login, Logout (JWT)
+- JWT Refresh with Axios interceptor
+- View products & search
+- Add to cart / wishlist
+- Checkout via Stripe
+- View past orders
+- Update profile
+
+### 🛒 Store Features
+- Cloudinary image upload
+- Product filters + pagination
+- Stock management
+- Product detail page
+
+### 🧾 Admin Features
+- Add/edit/delete products
+- Upload product images
+- View all orders
 ---
 
 ## 🧠 Tech Stack
@@ -96,7 +135,6 @@ Designed for **freelancing**, **portfolio showcase**, and **real-world commercia
 - Cloudinary (Media)
 
 ---
-
 ## 📦 Folder Structure
 
 ```
@@ -129,7 +167,6 @@ ecommerce-fullstack-app/
 ```
 
 ---
-
 ## 🧩 Architecture Diagram
 
 ### 🌙 Light Theme:
@@ -157,7 +194,6 @@ Stripe Checkout + Webhooks
 ```
 
 ---
-
 ## 🔐 Authentication Flow (JWT)
 
 - User Signup → `/api/auth/signup/`  
@@ -167,42 +203,24 @@ Stripe Checkout + Webhooks
 
 ---
 
-## 🛒 Core Features
+## 🚀 Quick Start
 
-### 🛍️ **Product Module**
-- Cloudinary image upload  
-- Search + Pagination  
-- Admin CRUD functionality  
-
-### 🛒 **Cart / Wishlist**
-- Per-user storage  
-- Add / Remove / Update quantities  
-
-### 💳 **Checkout + Payments**
-- Stripe Checkout (test mode)  
-- Webhook → updates order to **PAID**  
-- Complete order history  
-
-### 🧾 **Logging**
-- Backend Request logger  
-- Frontend error logger (optional)
-
----
-
-## ⚙️ Run Locally (Backend)
+1. **Clone repository**
+```bash
+git clone https://github.com/ranjeetks/ecommerce-fullstack-app.git
+```
+2. **Backend setup**
 
 ```bash
 cd backend
 python -m venv venv
-venv\Scriptsctivate
+venv\Scripts\activate
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
-
 ---
-
-## ⚙️ Run Locally (Frontend)
+3. **Frontend setup**
 
 ```bash
 cd frontend
@@ -235,50 +253,22 @@ VITE_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxx
 
 ---
 
-## 📸 Screenshots
-
-### 🏠 Login
-![Home](docs/screenshots/login.png)
-
-### 🛍️ Product List
-![Products](docs/screenshots/product-list.png)
-
-### 🛒 Cart
-![Cart](docs/screenshots/cart.png)
-
-### ❤️ Wishlist
-![Wishlist](docs/screenshots/wishlist.png)
-
-### 💳 Checkout
-![Checkout](docs/screenshots/checkout.png)
-
-### 📝 Register
-![Register](docs/screenshots/register.png)
-
-### 📦 My Orders
-![My Orders](docs/screenshots/my-orders.png)
-
-### 👤 Profile
-![Profile](docs/screenshots/profile.png)
-
-
----
-
 ```md
 ## 🧩 Git Workflow (Professional Branching Model)
 
-```mermaid
 flowchart LR
     A[staging branch<br/>Daily development] -->|Merge when stable| B[main branch<br/>Production-ready]
     B -->|Auto Deploy| C[Vercel Frontend]
     B -->|Auto Deploy| D[Render Backend]
     A --> E[feature branches optional]
 
+---
 
 ## 👨‍💻 Author  
 **Ranjeet Singh**  
-Full-Stack Developer (Django REST + React + TypeScript)  
-🔗 LinkedIn | 🔗 GitHub
+Full-Stack Developer (Django REST + React + TypeScript) 
+🔗 LinkedIn: https://www.linkedin.com/in/ranjeetks  
+🔗 GitHub: https://github.com/ranjeetks
 
 ---
 
