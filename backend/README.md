@@ -1,3 +1,13 @@
+<p align="center">
+  <img src="https://img.shields.io/badge/Django-5.0-green?logo=django&logoColor=white" />
+  <img src="https://img.shields.io/badge/DRF-API-red?logo=django&logoColor=white" />
+  <img src="https://img.shields.io/badge/PostgreSQL-Database-blue?logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/Cloudinary-Media-3448C5?logo=cloudinary&logoColor=white" />
+  <img src="https://img.shields.io/badge/Stripe-Payments-626CD9?logo=stripe&logoColor=white" />
+  <img src="https://img.shields.io/badge/Deployment-Render-46E3B7?logo=render&logoColor=white" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow" />
+</p>
+
 # ⚙️ Backend — Django REST Framework (E-commerce API)
 
 This is the backend powering the **Full-Stack E-Commerce Application**, built with **Django REST Framework**, **PostgreSQL**, **Stripe**, and **Cloudinary**.

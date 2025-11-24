@@ -8,15 +8,11 @@
   <img src="https://img.shields.io/badge/PostgreSQL-DB-blue?logo=postgresql&logoColor=white" />
   <img src="https://img.shields.io/badge/Stripe-Payments-626CD9?logo=stripe&logoColor=white" />
   <img src="https://img.shields.io/badge/Cloudinary-Media-3448C5?logo=cloudinary&logoColor=white" />
-</p>
 
-<p align="center">
-  <!-- Deployment -->
-  <img src="https://img.shields.io/badge/Vercel-Frontend-black?logo=vercel&logoColor=white" />
-  <img src="https://img.shields.io/badge/Render-Backend-46E3B7?logo=render&logoColor=white" />
-</p>
+  <!-- Deployment Status -->
+  <img src="https://api.vercel.com/v1/badges/ranjeetks/projects/ecommerce-frontend-rs/deployment-status" />
+  <img src="https://img.shields.io/website?url=https://ecommerce-backend-44e1.onrender.com&label=Backend%20API&logo=render&logoColor=white" />
 
-<p align="center">
   <!-- License -->
   <img src="https://img.shields.io/badge/License-MIT-yellow" />
 </p>
@@ -29,7 +25,26 @@ A complete **production-grade e-commerce system** built using modern technologie
 Designed for **freelancing**, **portfolio showcase**, and **real-world commercial use**.
 
 ---
+## 🌟 Project Preview
 
+<div align="center">
+
+### 🖼️ Modern & Clean UI — Built for Freelancing & Real Clients
+
+<table>
+<tr>
+<td align="center"><img src="docs/screenshots/product-list.png" width="450"/><br/><b>Product Catalog</b></td>
+<td align="center"><img src="docs/screenshots/cart.png" width="450"/><br/><b>User Cart</b></td>
+</tr>
+<tr>
+<td align="center"><img src="docs/screenshots/checkout.png" width="450"/><br/><b>Stripe Checkout</b></td>
+<td align="center"><img src="docs/screenshots/my-orders.png" width="450"/><br/><b>Order History</b></td>
+</tr>
+</table>
+
+</div>
+
+---
 ## 🌍 Live Demo Links
 
 | Service | URL |
@@ -120,10 +135,6 @@ ecommerce-fullstack-app/
 ### 🌙 Light Theme:
 
 ![Architecture](docs/architecture_light.png)
-
-### 🌙 Dark Theme:
-
-![Architecture Dark](docs/architecture-dark.png)
 
 ```
 React + TypeScript (Vercel)
@@ -226,19 +237,43 @@ VITE_STRIPE_PUBLISHABLE_KEY=pk_test_xxxxx
 
 ## 📸 Screenshots
 
-| Feature | Screenshot Path |
-|---------|-----------------|
-| Home Page | `docs/screenshots/home.png` |
-| Product List | `docs/screenshots/product-list.png` |
-| Product Detail | `docs/screenshots/product-detail.png` |
-| Cart | `docs/screenshots/cart.png` |
-| Wishlist | `docs/screenshots/wishlist.png` |
-| Checkout | `docs/screenshots/checkout.png` |
-| Order Success | `docs/screenshots/order-success.png` |
-| Admin Upload | `docs/screenshots/admin-upload.png` |
-| Swagger UI | `docs/screenshots/swagger.png` |
+### 🏠 Login
+![Home](docs/screenshots/login.png)
+
+### 🛍️ Product List
+![Products](docs/screenshots/product-list.png)
+
+### 🛒 Cart
+![Cart](docs/screenshots/cart.png)
+
+### ❤️ Wishlist
+![Wishlist](docs/screenshots/wishlist.png)
+
+### 💳 Checkout
+![Checkout](docs/screenshots/checkout.png)
+
+### 📝 Register
+![Register](docs/screenshots/register.png)
+
+### 📦 My Orders
+![My Orders](docs/screenshots/my-orders.png)
+
+### 👤 Profile
+![Profile](docs/screenshots/profile.png)
+
 
 ---
+
+```md
+## 🧩 Git Workflow (Professional Branching Model)
+
+```mermaid
+flowchart LR
+    A[staging branch<br/>Daily development] -->|Merge when stable| B[main branch<br/>Production-ready]
+    B -->|Auto Deploy| C[Vercel Frontend]
+    B -->|Auto Deploy| D[Render Backend]
+    A --> E[feature branches optional]
+
 
 ## 👨‍💻 Author  
 **Ranjeet Singh**  

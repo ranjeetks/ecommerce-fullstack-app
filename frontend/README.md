@@ -1,3 +1,13 @@
+<p align="center">
+  <img src="https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black" />
+  <img src="https://img.shields.io/badge/TypeScript-5-blue?logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vite-Build-646CFF?logo=vite&logoColor=white" />
+  <img src="https://img.shields.io/badge/Bootstrap-5-purple?logo=bootstrap&logoColor=white" />
+  <img src="https://img.shields.io/badge/TailwindCSS-Utility-38B2AC?logo=tailwindcss&logoColor=white" />
+  <img src="https://img.shields.io/badge/Deployment-Vercel-black?logo=vercel&logoColor=white" />
+  <img src="https://img.shields.io/badge/License-MIT-yellow" />
+</p>
+
 # 💻 Frontend — React + Vite + TypeScript
 
 This is the **React + TypeScript frontend** for the full-stack E-Commerce platform.  
