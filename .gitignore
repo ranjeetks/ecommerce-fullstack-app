@@ -62,3 +62,7 @@ Thumbs.db
 # Ignore all Markdown files except README.md
 *.md
 !README.md
+
+/docs/*
+!/docs/screenshots/
+!/docs/screenshots/**

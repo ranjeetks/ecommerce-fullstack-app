@@ -22,7 +22,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/screenshots/thumbnail_react_django_E-commerce.png" width="600" alt="Project Thumbnail"/>
+  <img src="docs/screenshots/thumbnail_e-commerce-react-django.jpg" width="600" alt="Project Thumbnail"/>
 </p>
 
 # 🛍️ Full-Stack E-Commerce Platform  
@@ -266,9 +266,9 @@ flowchart LR
 
 ## 👨‍💻 Author  
 **Ranjeet Singh**  
-Full-Stack Developer (Django REST + React + TypeScript) 
-🔗 LinkedIn: https://www.linkedin.com/in/ranjeetks  
+Full-Stack Developer (Django REST + React + TypeScript)   
 🔗 GitHub: https://github.com/ranjeetks
+🔗 LinkedIn:
 
 ---
 
