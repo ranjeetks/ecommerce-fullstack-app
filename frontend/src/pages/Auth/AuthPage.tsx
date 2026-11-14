@@ -13,7 +13,7 @@ const AuthPage = () => {
           {showLogin ? "Welcome Back 👋" : "Create Your Account ✨"}
         </h2>
 
-        {showLogin ? <LoginForm /> : <SignupForm />}
+        {showLogin ? <LoginForm /> : <SignupForm onSuccess={() => setShowLogin(true)} />}
 
         <div className="text-center mt-6 text-sm text-gray-600">
           {showLogin ? (

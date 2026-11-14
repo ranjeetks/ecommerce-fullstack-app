@@ -1,10 +1,14 @@
 // src/components/auth/SignupForm.tsx
 import { useState } from "react";
 import { useAuth } from "@context/AuthContext";
-import { useNavigate } from "react-router-dom";
 
-const SignupForm = () => {
-  const navigate = useNavigate();
+// onSuccess: called after a successful signup so the parent page can show the login form.
+// (navigate("/") does nothing here: "/" is the page that is already open, so it never re-renders.)
+type SignupFormProps = {
+  onSuccess?: () => void;
+};
+
+const SignupForm = ({ onSuccess }: SignupFormProps) => {
   const { signup, loading } = useAuth(); // ✅ Use AuthContext
   const [formData, setFormData] = useState({
     username: "",
@@ -34,9 +38,9 @@ const SignupForm = () => {
       await signup(formData.email, formData.password, formData.username,formData.confirmPassword);
       setSuccess(true);
 
-      // Redirect after short delay (AuthContext already navigates)
+      // Show the success message briefly, then switch the page to the login form
       setTimeout(() => {
-        navigate("/", { state: { fromSignup: true } });
+        onSuccess?.();
       }, 1200);
     } catch (err: any) {
       console.error("❌ Signup failed:", err);
