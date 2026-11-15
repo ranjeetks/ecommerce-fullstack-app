@@ -8,3 +8,8 @@ variable "origin_id" {
   type        = string
   default     = "random-origin-id"
 }
+
+variable "backend_domain_name" {
+  description = "Hostname of the backend ALB (must be covered by the ALB's certificate); /api/* is routed there"
+  type        = string
+}

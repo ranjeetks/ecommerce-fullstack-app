@@ -3,6 +3,9 @@ module "s3_bucket" {
 
   bucket = "ecommerce-app-s3-bucket-2026"
 
+  # FASTER / CLEANER DESTROY: without this, `destroy` fails while the bucket still holds the built frontend files
+  force_destroy = true
+
   control_object_ownership = true
   object_ownership         = "BucketOwnerEnforced"
 
