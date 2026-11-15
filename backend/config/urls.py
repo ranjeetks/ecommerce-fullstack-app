@@ -16,6 +16,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.http import JsonResponse
 from django.urls import path, include
 from apps.users.views import home_view
 from django.conf.urls.static import static
@@ -26,7 +27,14 @@ from drf_spectacular.views import (
     SpectacularRedocView,
 )
 
+def health_view(request):
+    """Liveness probe for the ALB target group (no DB access, always 200)."""
+    return JsonResponse({"status": "ok"})
+
+
 urlpatterns = [
+    # ALB health check (no trailing slash, so APPEND_SLASH does not redirect it)
+    path("health", health_view, name="health"),
     #path("", root_view, name="root"),
     path('', home_view, name='home_view'), 
     path('admin/', admin.site.urls),

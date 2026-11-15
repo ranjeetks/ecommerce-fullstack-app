@@ -14,7 +14,8 @@ RUN apt-get update \
 
 # Create a non-root user that owns /app
 RUN useradd -m -u 1000 appuser \
-    && chown appuser:appuser /app
+    && chown appuser:appuser /app \
+    && mkdir -p /logs && chown appuser:appuser /logs
 
 # Install Python dependencies first so this layer is cached until requirements change
 COPY requirements.txt .
@@ -29,4 +30,11 @@ USER appuser
 EXPOSE 8000
 
 # Run Django development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+# Run Django using container's SQLite file, no database instance required.
+# `migrate` creates the tables (e.g. users_user) in a fresh SQLite file on every container start,
+# then `exec` replaces the shell so runserver is the main process.
+# NOTE: the SQLite file lives inside the container, so all data is lost on every restart/redeploy.
+CMD ["sh", "-c", "python manage.py migrate --noinput && exec python manage.py runserver 0.0.0.0:8000"]
+

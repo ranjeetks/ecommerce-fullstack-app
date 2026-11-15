@@ -103,7 +103,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 
-# Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 # DATABASES = {
@@ -113,14 +112,40 @@ WSGI_APPLICATION = "config.wsgi.application"
 #     }
 # }
 
-# Database
-DATABASES = {
-    "default": dj_database_url.config(
-        default=os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
-        conn_max_age=600,  # Keeps DB connections alive for 10 minutes
-        ssl_require=False, # Set to True if Render forces SSL
-    )
-}
+
+# Previous version (single DATABASE_URL, no SSL); replaced by the DB_HOST branch below.
+# DATABASES = {
+#     "default": dj_database_url.config(
+#         default=os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+#         conn_max_age=600,  # Keeps DB connections alive for 10 minutes
+#         ssl_require=False, # Set to True if Render forces SSL
+#     )
+# }
+
+if os.getenv("DB_HOST"):
+    # AWS (ECS + RDS): host/name/user come from plain env vars, the password from Secrets Manager.
+    # RDS Postgres 15+ refuses unencrypted connections, so sslmode=require is needed.
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "HOST": os.environ["DB_HOST"],
+            "PORT": os.getenv("DB_PORT", "5432"),
+            "NAME": os.environ["DB_NAME"],
+            "USER": os.environ["DB_USER"],
+            "PASSWORD": os.environ["DB_PASSWORD"],
+            "CONN_MAX_AGE": 600,  # Keeps DB connections alive for 10 minutes
+            "OPTIONS": {"sslmode": "require"},
+        }
+    }
+else:
+    # Local development: DATABASE_URL if set, otherwise the SQLite file.
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+            conn_max_age=600,  # Keeps DB connections alive for 10 minutes
+            ssl_require=False,
+        )
+    }
 
 
 # Password validation
