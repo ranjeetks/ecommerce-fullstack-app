@@ -134,7 +134,7 @@ if os.getenv("DB_HOST"):
             "USER": os.environ["DB_USER"],
             "PASSWORD": os.environ["DB_PASSWORD"],
             "CONN_MAX_AGE": 600,  # Keeps DB connections alive for 10 minutes
-            "OPTIONS": {"sslmode": "require"},
+            "OPTIONS": {"sslmode": "require"}, # RDS from AWS will reject any connection that isn't encrypted.
         }
     }
 else:

@@ -14,6 +14,9 @@ module "ecs" {
       memory        = 512
       desired_count = 1
 
+      # ECS Exec (SSM Session Manager): shell into the task and tunnel to RDS (private subnets)
+      enable_execute_command = true
+
       # FASTER UP: ECS ignores failing ALB health checks for this long after a task starts, so a
       # slow start is not killed. Keep it short because Django starts in a few seconds.
       health_check_grace_period_seconds = 30
