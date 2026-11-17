@@ -1,5 +1,6 @@
 // src/pages/admin/EditProduct.tsx
 import { useState, useEffect } from "react";
+import axios from "axios";
 import api from "@services/api";
 
 export default function EditProduct({ productId }: { productId: number }) {
@@ -41,9 +42,10 @@ export default function EditProduct({ productId }: { productId: number }) {
       });
 
       alert("Product updated");
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      alert(err?.response?.data?.detail || "Update failed");
+      const detail = axios.isAxiosError<{ detail?: string }>(err) ? err.response?.data?.detail : undefined;
+      alert(detail || "Update failed");
     } finally {
       setLoading(false);
     }

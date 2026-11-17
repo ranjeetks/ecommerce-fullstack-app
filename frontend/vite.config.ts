@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import path from "path";
 
@@ -28,6 +28,12 @@ export default defineConfig({
       '/api': proxyRule,   // API calls -> Django
       '/media': proxyRule, // uploaded images (dev: served by Django from backend/media)
     },
+  },
+  test: {
+    environment: 'happy-dom',
+    globals: true,
+    setupFiles: './src/test/setup.ts',
+    css: false,
   },
   resolve: {
     alias: {

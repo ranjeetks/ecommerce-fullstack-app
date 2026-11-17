@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api, {
   login as loginService,
@@ -7,37 +7,7 @@ import api, {
   getTokens,
   signup as signupService,
 } from "@services/api";
-
-// ---------------------------
-// 🧩 Types
-// ---------------------------
-type Role = {
-  id: number;
-  name: string;
-};
-
-type User = {
-  id: number;
-  username: string;
-  email: string;
-  roles: Role[];
-};
-
-type AuthContextType = {
-  user: User | null;
-  isLoggedIn: boolean;
-  isAdmin: boolean;
-  isCustomer: boolean;
-  loading: boolean;
-  signup: (email: string, password: string, username: string,confirmPassword: string) => Promise<void>;
-  login: (username: string, password: string) => Promise<void>;
-  logout: () => void;
-};
-
-// ---------------------------
-// 🧩 Context Setup
-// ---------------------------
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import { AuthContext, type User } from "./authContext";
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const navigate = useNavigate();
@@ -141,13 +111,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </AuthContext.Provider>
   );
-};
-
-// ---------------------------
-// 🧩 Hook
-// ---------------------------
-export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within an AuthProvider");
-  return ctx;
 };

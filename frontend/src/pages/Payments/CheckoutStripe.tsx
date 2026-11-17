@@ -7,6 +7,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import axios from "axios";
 import api from "@services/api";
 import { useLocation } from "react-router-dom";
 
@@ -52,18 +53,22 @@ const CheckoutForm: React.FC = () => {
         );
         console.log("✅ Received clientSecret:", res.data);
         setClientSecret(res.data.clientSecret);
-      } catch (err: any) {
-        console.error("❌ Failed to create payment intent:", {
-          message: err.message,
-          status: err.response?.status,
-          data: err.response?.data,
-          headers: err.response?.headers,
-        });
+      } catch (err) {
+        if (axios.isAxiosError(err)) {
+          console.error("❌ Failed to create payment intent:", {
+            message: err.message,
+            status: err.response?.status,
+            data: err.response?.data,
+            headers: err.response?.headers,
+          });
+        } else {
+          console.error("❌ Failed to create payment intent:", err);
+        }
         setStatus("failed to create payment intent");
       }
     };
     createPaymentIntent();
-  }, [total]);
+  }, [total, orderId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

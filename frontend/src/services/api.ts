@@ -1,5 +1,5 @@
 // src/services/api.ts
-import axios from "axios";
+import axios, { type InternalAxiosRequestConfig } from "axios";
 // Usage in a service or component
 import { logger } from "@utils/logger";
 import { sendFrontendLog } from "@utils/logger/sender";
@@ -13,11 +13,11 @@ function getErrorMessage(error: unknown): string {
   if (typeof error === "string") return error;
   if (error instanceof Error) return error.message;
   // try axios-like shapes
-  const anyErr = error as any;
+  const anyErr = error as { response?: { data?: unknown }; message?: unknown };
   try {
     if (anyErr?.response?.data) {
       // prefer structured message if available
-      const d = anyErr.response.data;
+      const d = anyErr.response.data as { detail?: unknown; message?: unknown } | string;
       if (typeof d === "string") return d;
       if (d?.detail) return String(d.detail);
       if (d?.message) return String(d.message);
@@ -100,8 +100,11 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   async (error: unknown) => {
-    // normalize to any for working with axios-like objects below
-    const errAny = error as any;
+    // treat as an axios-like error object below
+    const errAny = error as {
+      config?: InternalAxiosRequestConfig & { _retry?: boolean };
+      response?: { status?: number };
+    };
     const originalRequest = errAny?.config;
 
     // If 401 and refresh token exists and we haven't retried yet -> try refresh
@@ -130,7 +133,7 @@ api.interceptors.response.use(
           await sendFrontendLog(
             "error",
             `Token refresh failed for ${originalRequest?.url}`,
-            { error: getErrorMessage(err), status: (err as any)?.response?.status }
+            { error: getErrorMessage(err), status: axios.isAxiosError(err) ? err.response?.status : undefined }
           );
         } catch {
           /* swallow */
@@ -190,7 +193,7 @@ export const login = async (username: string, password: string) => {
 
     // Step 3: normalize roles
     const roleNames = Array.isArray(user.roles)
-      ? user.roles.map((r: any) => (typeof r === "string" ? r : r.name))
+      ? user.roles.map((r: string | { name: string }) => (typeof r === "string" ? r : r.name))
       : [];
 
     // Step 4: Merge token response + user info + roleNames
@@ -244,7 +247,7 @@ export const signup = async (
       console.error("❌ Signup failed (generic error):", err.message);
     } else if (typeof err === "object" && err && "response" in err) {
       // Axios-style error
-      const axiosErr = err as any;
+      const axiosErr = err as { response?: { data?: unknown } };
       console.error("❌ Signup failed (Axios error):", axiosErr.response?.data);
     } else {
       console.error("❌ Signup failed (unknown error):", err);

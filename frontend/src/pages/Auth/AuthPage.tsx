@@ -10,7 +10,7 @@ const AuthPage = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
       <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6 border border-gray-100">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          {showLogin ? "Welcome Back 👋" : "Create Your Account ✨"}
+          {showLogin ? "Welcome Back 👋 😊" : "Create Your Account ✨"}
         </h2>
 
         {showLogin ? <LoginForm /> : <SignupForm onSuccess={() => setShowLogin(true)} />}

@@ -1,5 +1,5 @@
 // src/components/auth/LogoutButton.tsx
-import { useAuth } from "@context/AuthContext";
+import { useAuth } from "@context/useAuth";
 
 const LogoutButton = () => {
   const { logout } = useAuth(); // 👈 use AuthContext

@@ -1,0 +1,54 @@
+# Frontend CI: lint, test, build. Runs on PRs and pushes, and is reused by frontend-deploy.yml.
+name: Frontend CI
+
+on:
+  push:
+    branches: ["frontend"]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-*.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/frontend-*.yml"
+  workflow_dispatch:
+  workflow_call: # make this workflow callable by other workflows
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontend-ci-${{ github.workflow }}-${{ github.ref }} # unique id for the pipeline based on workflow and a specific branch. it ensures that only one run per branch is active at a time.
+  cancel-in-progress: true # optimization
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: frontend/.nvmrc # single source of truth for the Node version
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+        env:
+          # Public (publishable) values only; set under Settings > Secrets and variables > Actions > Variables
+          VITE_STRIPE_PUBLISHABLE_KEY: ${{ vars.VITE_STRIPE_PUBLISHABLE_KEY }}
+          VITE_RAZORPAY_KEY_ID: ${{ vars.VITE_RAZORPAY_KEY_ID }}
+      - name: Upload build for the deploy job
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist
+          if-no-files-found: error
+          retention-days: 7

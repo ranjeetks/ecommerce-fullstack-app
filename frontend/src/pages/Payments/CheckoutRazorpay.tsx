@@ -2,8 +2,27 @@
 import React from "react";
 import api from "@services/api";
 
+interface RazorpayResponse {
+  razorpay_payment_id: string;
+  razorpay_order_id: string;
+  razorpay_signature: string;
+}
+
+interface RazorpayOptions {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  order_id: string;
+  handler: (response: RazorpayResponse) => void;
+  prefill: { name: string; email: string };
+}
+
 declare global {
-  interface Window { Razorpay: any; }
+  interface Window {
+    Razorpay: new (options: RazorpayOptions) => { open: () => void };
+  }
 }
 
 const CheckoutRazorpay: React.FC = () => {
@@ -18,7 +37,7 @@ const CheckoutRazorpay: React.FC = () => {
         name: "Test Product",
         description: "Test Product - ₹999",
         order_id: order.id,
-        handler: function (response: any) {
+        handler: function (response: RazorpayResponse) {
           // send response (payment_id, order_id, signature) to backend to verify
           api.post("/api/razorpay/verify-payment/", response)
             .then(() => window.location.href = `/success?provider=razorpay&pid=${response.razorpay_payment_id}`)

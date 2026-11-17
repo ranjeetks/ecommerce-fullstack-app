@@ -65,7 +65,7 @@ export default function CartPage() {
     // Step 2️⃣ Go to payment page with backend total & order_id
     navigate("/checkout-stripe", { state: { orderId: order_id, total } });
     //navigate("/checkout-stripe", { state: { total } })
-  } catch (err: any) {
+  } catch (err) {
     console.error("❌ Failed to confirm order:", err);
     alert("Failed to confirm order. Please try again.");
   }

@@ -1,9 +1,14 @@
 // src/services/wishlistService.ts
+import axios from "axios";
 import api from "@services/api";
 import type { WishlistDTO } from "@interfaces/dto/wishlist-dto";
 import type { ApiResponse } from "@interfaces/common/apiResponse";
 
 const WISHLIST_BASE_URL = "/wishlist/";
+
+function apiErrorField(err: unknown, field: "detail" | "error"): string | undefined {
+  return axios.isAxiosError<{ detail?: string; error?: string }>(err) ? err.response?.data?.[field] : undefined;
+}
 
 export async function getWishlist(): Promise<ApiResponse<WishlistDTO>> {
   try {
@@ -12,12 +17,12 @@ export async function getWishlist(): Promise<ApiResponse<WishlistDTO>> {
       success: true,
       data: res.data,
     };
-  } catch (err: any) {
+  } catch (err) {
     console.error("Error fetching wishlist:", err);
     return {
       success: false,
       data: null,
-      error: err.response?.data?.detail || "Failed to fetch wishlist",
+      error: apiErrorField(err, "detail") || "Failed to fetch wishlist",
     };
   }
 }
@@ -30,11 +35,11 @@ export async function addToWishlist(productId: number): Promise<ApiResponse<null
       data: res.data ?? null,   // ✅ ensure `data` exists
       message: res.data?.message || "Product added to wishlist",
     };
-  } catch (err: any) {
+  } catch (err) {
     return {
       success: false,
       data: null,
-      error: err.response?.data?.error || "Failed to add to wishlist",
+      error: apiErrorField(err, "error") || "Failed to add to wishlist",
     };
   }
 }
@@ -47,11 +52,11 @@ export async function removeFromWishlist(productId: number): Promise<ApiResponse
       data: res.data ?? null,   // ✅ ensure `data` exists
       message: res.data?.message || "Product removed from wishlist",
     };
-  } catch (err: any) {
+  } catch (err) {
     return {
       success: false,
       data: null,
-      error: err.response?.data?.error || "Failed to remove from wishlist",
+      error: apiErrorField(err, "error") || "Failed to remove from wishlist",
     };
   }
 }
