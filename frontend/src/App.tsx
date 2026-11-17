@@ -15,8 +15,6 @@ import WishlistPage from "@pages/Wishlist/WishlistPage";
 import ProductList from "@pages/Products/ProductListFor_CartWishlist";
 import RoleRoute from "@routes/RoleRoute";
 import NotAuthorized from "@pages/NotAuthorized";
-import CheckoutStripe from "@pages/Payments/CheckoutStripe";
-import CheckoutRazorpay from "@pages/Payments/CheckoutRazorpay";
 import Success from "@pages/Payments/Success";
 import Failure from "@pages/Payments/Failure"; // 👈 Import failure page
 import MyOrdersPage from "@pages/Orders/MyOrdersPage";
@@ -124,8 +122,6 @@ function App() {
       
           }
         />
-      <Route path="/checkout-stripe" element={<CheckoutStripe />} />
-        <Route path="/checkout-razorpay" element={<CheckoutRazorpay />} />
         <Route path="/success" element={<Success />} />
         <Route path="/failure" element={<Failure />} />
 

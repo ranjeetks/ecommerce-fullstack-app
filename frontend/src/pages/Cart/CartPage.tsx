@@ -57,14 +57,11 @@ export default function CartPage() {
   try {
     // Step 1️⃣ Create confirmed order
     
-     const res = await api.post("/orders/confirm/");
-     const { order_id, total } = res.data;
-    // alert("Order confirmed! Proceeding to payment. for order_id ="+order_id +"Total= "+ total);
+    const res = await api.post("/orders/confirm/");
     console.log("✅ Order confirmed:", res.data);
 
-    // Step 2️⃣ Go to payment page with backend total & order_id
-    navigate("/checkout-stripe", { state: { orderId: order_id, total } });
-    //navigate("/checkout-stripe", { state: { total } })
+    // Step 2️⃣ No payment provider: the confirmed order is final, show it in My Orders
+    navigate("/my-orders");
   } catch (err) {
     console.error("❌ Failed to confirm order:", err);
     alert("Failed to confirm order. Please try again.");
@@ -172,7 +169,7 @@ export default function CartPage() {
               onClick={handleCheckout}
               className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-md transition font-medium"
             >
-              Proceed to Payment
+              Place Order
             </button>
           </div>
         </>
