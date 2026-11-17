@@ -9,6 +9,10 @@ on:
       - ".github/workflows/frontend-*.yml"
   workflow_dispatch:
 
+# Default for every job; the deploy job below adds id-token on top of this.
+permissions:
+  contents: read
+
 # Never run two deploys at once, and never cancel one halfway through an upload.
 concurrency:
   group: frontend-deploy
@@ -17,8 +21,6 @@ concurrency:
 jobs:
   ci:
     uses: ./.github/workflows/frontend-ci.yml
-    permissions:
-      contents: read
 
   deploy:
     needs: ci # only runs if lint, tests and build all passed
