@@ -50,7 +50,7 @@ export default function MyOrdersPage() {
           : [];
 
       setOrders(ordersList);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Error fetching orders:", err);
       setError("⚠️ Failed to load your orders. Please try again later.");
     } finally {

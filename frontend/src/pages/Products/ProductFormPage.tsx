@@ -7,11 +7,19 @@ import {
   updateProduct,
 } from "@services/productService";
 
+interface ProductFormState {
+  name: string;
+  price: number;
+  stock: number;
+  imageFile: File | null;
+  existingImage: string;
+}
+
 export default function ProductFormPage() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<ProductFormState>({
     name: "",
     price: 0,
     stock: 0,
@@ -35,7 +43,7 @@ export default function ProductFormPage() {
           price: data.price,
           stock: data.stock,
           imageFile: null,
-          existingImage: data.image_url, // ✅ backend provides absolute URL
+          existingImage: data.image_url ?? "", // ✅ backend provides absolute URL
         });
         setPreview(data.image_url?? null);
       });
@@ -48,7 +56,7 @@ export default function ProductFormPage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    setFormData((prev: any) => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: name === "price" || name === "stock" ? Number(value) : value,
     }));
@@ -61,7 +69,7 @@ export default function ProductFormPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setFormData((prev: any) => ({
+    setFormData((prev) => ({
       ...prev,
       imageFile: file,
     }));

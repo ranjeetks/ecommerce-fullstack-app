@@ -1,6 +1,7 @@
 // src/components/auth/SignupForm.tsx
 import { useState } from "react";
-import { useAuth } from "@context/AuthContext";
+import axios from "axios";
+import { useAuth } from "@context/useAuth";
 
 // onSuccess: called after a successful signup so the parent page can show the login form.
 // (navigate("/") does nothing here: "/" is the page that is already open, so it never re-renders.)
@@ -42,13 +43,15 @@ const SignupForm = ({ onSuccess }: SignupFormProps) => {
       setTimeout(() => {
         onSuccess?.();
       }, 1200);
-    } catch (err: any) {
+    } catch (err) {
       console.error("❌ Signup failed:", err);
-      const errorMsg =
-        err.response?.data?.detail ||
-        err.response?.data?.error ||
-        err.message ||
-        "Signup failed. Please try again.";
+      const fallback = "Signup failed. Please try again.";
+      let errorMsg = fallback;
+      if (axios.isAxiosError<{ detail?: string; error?: string }>(err)) {
+        errorMsg = err.response?.data?.detail || err.response?.data?.error || err.message || fallback;
+      } else if (err instanceof Error) {
+        errorMsg = err.message || fallback;
+      }
       setError(errorMsg);
     }
   };

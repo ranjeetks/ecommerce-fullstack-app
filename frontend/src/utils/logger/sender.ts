@@ -42,9 +42,9 @@ export async function sendFrontendLog(level: LogLevel, message: string, extra?: 
     const body = JSON.stringify(payload);
 
     // Prefer sendBeacon for reliability on unload and non-blocking behavior
-    if (typeof navigator !== "undefined" && typeof (navigator as any).sendBeacon === "function") {
+    if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
       try {
-        (navigator as any).sendBeacon(endpoint, new Blob([body], { type: "application/json" }));
+        navigator.sendBeacon(endpoint, new Blob([body], { type: "application/json" }));
         return;
       } catch {
         // Fall back to fetch if beacon fails
@@ -61,7 +61,7 @@ export async function sendFrontendLog(level: LogLevel, message: string, extra?: 
   } catch (err) {
     // Never throw from logging — swallow errors; optionally show in DEV
     if (import.meta.env.DEV) {
-      // eslint-disable-next-line no-console
+       
       console.warn("sendFrontendLog failed:", err);
     }
   }

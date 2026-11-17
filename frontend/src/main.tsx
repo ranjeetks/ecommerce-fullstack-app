@@ -22,7 +22,7 @@ if (FRONTEND_LOGGING_ENABLED) {
       const msg = typeof message === "string" ? message : String(message);
       const src = typeof source === "string" ? source : String(source);
       const location = `${src}:${lineno ?? "?"}:${colno ?? "?"}`;
-      const stack = (error as any)?.stack;
+      const stack = error?.stack;
 
       // Console + local log
       logger.error("uncaught error:", { msg, location, stack });
@@ -31,7 +31,7 @@ if (FRONTEND_LOGGING_ENABLED) {
       void sendFrontendLog("error", msg, { location, stack });
     } catch (e) {
       // swallow any errors from the logging path
-      // eslint-disable-next-line no-console
+       
       console.warn("error while logging uncaught error:", e);
     }
 
@@ -50,7 +50,7 @@ if (FRONTEND_LOGGING_ENABLED) {
 
       void sendFrontendLog("error", "unhandledrejection: " + message, { stack });
     } catch (e) {
-      // eslint-disable-next-line no-console
+       
       console.warn("error while logging unhandledrejection:", e);
     }
   });

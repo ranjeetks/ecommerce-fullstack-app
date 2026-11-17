@@ -1,9 +1,10 @@
 // ✅ LoginForm.tsx - Converted to Bootstrap 5+
 import { useState } from "react";
+import axios from "axios";
 //import { useNavigate } from "react-router-dom";
 //import { login } from "@services/api";
 //import { saveTokens } from "@services/api";
-import { useAuth } from "@context/AuthContext"; // 👈 import context
+import { useAuth } from "@context/useAuth"; // 👈 import context
 import { logger } from "@utils/logger";
 
 const LoginForm = () => {
@@ -24,10 +25,11 @@ const LoginForm = () => {
     try {
       await login(formData.username, formData.password); 
       logger.info("User logged in successfully", {username: formData.username});
-    } catch (err: any) {
+    } catch (err) {
       alert("ERROR - inside catch");
       console.error(err);
-      setError(err.response?.data?.detail || "Login failed");
+      const detail = axios.isAxiosError<{ detail?: string }>(err) ? err.response?.data?.detail : undefined;
+      setError(detail || "Login failed");
       logger.error("Login failed", { username: formData.username, error: err });
     } finally {
       setLoading(false);

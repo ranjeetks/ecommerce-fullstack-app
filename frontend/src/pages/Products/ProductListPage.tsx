@@ -68,9 +68,12 @@ const ProductListPage: React.FC = () => {
     }
 
     if (sortField) {
-      updated.sort((a: any, b: any) => {
-        if (a[sortField] < b[sortField]) return sortOrder === "asc" ? -1 : 1;
-        if (a[sortField] > b[sortField]) return sortOrder === "asc" ? 1 : -1;
+      updated.sort((a, b) => {
+        const av = a[sortField];
+        const bv = b[sortField];
+        if (av == null || bv == null) return 0;
+        if (av < bv) return sortOrder === "asc" ? -1 : 1;
+        if (av > bv) return sortOrder === "asc" ? 1 : -1;
         return 0;
       });
     }

@@ -1,5 +1,5 @@
 // ✅ UserInfo.tsx (fixed) - Uses AuthContext instead of axios
-import { useAuth } from "@context/AuthContext";
+import { useAuth } from "@context/useAuth";
 
 const UserInfo = () => {
   const { user } = useAuth();
