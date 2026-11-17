@@ -39,6 +39,7 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm run lint
+      - run: npm test
       - name: Print success message
         if: success()
         run: echo "Frontend CI succeeded for Node.js ${{ matrix.node-version }}!"
