@@ -1,10 +1,13 @@
 # Lets the GitHub Actions deploy workflow assume an AWS role without long-lived access keys.
 # Scoped to the main branch of this repository and to the minimum S3 / CloudFront actions.
 
-variable "github_repository" {
-  description = "GitHub repo (owner/name) allowed to deploy the frontend"
+# GitHub now puts immutable numeric IDs in the OIDC `sub` claim (owner@ownerId/repo@repoId), so a
+# renamed, deleted-and-recreated or transferred repo can never reuse this role.
+# Copy the exact value from the "Debug OIDC claims" step of a deploy run if it ever changes.
+variable "github_oidc_subject_prefix" {
+  description = "OIDC `sub` claim prefix for the repo allowed to deploy the frontend"
   type        = string
-  default     = "Xuyen21/devops-ecommerce-fullstack-app"
+  default     = "repo:Xuyen21@93767417/devops-ecommerce-fullstack-app@1444708921"
 }
 
 # NOTE: an AWS account can have only one OIDC provider per URL.
@@ -23,14 +26,16 @@ data "aws_iam_policy_document" "github_deploy_trust" {
       identifiers = [aws_iam_openid_connect_provider.github.arn]
     }
     condition {
-      test     = "StringEquals"
+      test = "StringEquals"
+      # decide who is this token for (audience)
       variable = "token.actions.githubusercontent.com:aud"
       values   = ["sts.amazonaws.com"]
     }
     condition {
-      test     = "StringEquals"
-      variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repository}:ref:refs/heads/main"]
+      test = "StringEquals"
+      # critical authorization
+      variable = "token.actions.githubusercontent.com:sub" # only accept request from this subject
+      values   = ["${var.github_oidc_subject_prefix}:ref:refs/heads/main"]
     }
   }
 }
