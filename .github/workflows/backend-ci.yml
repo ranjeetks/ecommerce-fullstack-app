@@ -1,0 +1,65 @@
+# Backend CI: Django checks + tests, and a Docker build to prove the image still builds.
+# Runs on PRs and pushes, and is reused by backend-deploy.yml.
+name: Backend CI
+
+on:
+  push:
+    branches: ["backend"]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-*.yml"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-*.yml"
+  workflow_dispatch:
+  workflow_call: # make this workflow callable by other workflows
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      # Throwaway values for CI only. No DB_HOST, so Django uses a temporary SQLite database.
+      SECRET_KEY: ci-only-not-a-secret
+      ENV: DEV
+      DEBUG: "False"
+      LOGGING_ENABLED: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11" # same as backend/Dockerfile.dev
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - run: pip install -r requirements.txt
+      - run: python manage.py check
+      - name: Fail if a model change is missing its migration
+        run: python manage.py makemigrations --check --dry-run
+      - run: python manage.py test
+
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      # Build only (push: false). Same platform as Fargate.
+      - uses: docker/build-push-action@v6
+        with:
+          context: backend
+          file: backend/Dockerfile.dev
+          platforms: linux/amd64
+          push: false
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

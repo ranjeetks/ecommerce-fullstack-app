@@ -1,0 +1,83 @@
+# Backend CD: after CI passes on main, build the image, push it to ECR and roll it out on ECS Fargate.
+# Database migrations run when the container starts (see the CMD in backend/Dockerfile.dev).
+name: Backend Deploy
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend-*.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Never run two deploys at once, and never cancel one halfway through.
+concurrency:
+  group: backend-deploy
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: us-east-1
+  ECR_REPOSITORY: eccommerce-app # name from terraform (sic)
+  ECS_CLUSTER: ecommerce-app
+  ECS_SERVICE: ecommerce-backend
+
+jobs:
+  ci:
+    uses: ./.github/workflows/backend-ci.yml
+
+  deploy:
+    needs: ci # only runs if checks, tests and the docker build passed
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # request the OIDC token used to assume the AWS role
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials (OIDC, no stored keys)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_BACKEND_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Log in to ECR
+        id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - uses: docker/setup-buildx-action@v3
+
+      # Two tags: the commit SHA (unique, lets you trace or roll back to an exact build)
+      # and :latest (what the Terraform task definition points to).
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: backend
+          file: backend/Dockerfile.dev
+          platforms: linux/amd64 # Fargate x86_64
+          push: true
+          tags: |
+            ${{ steps.ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+            ${{ steps.ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      # ECS reads the image only when a task starts, so force a new deployment to pull :latest.
+      # ECS starts new tasks, waits for ALB health checks to pass, then stops the old ones.
+      - name: Roll out on ECS
+        run: >
+          aws ecs update-service
+          --cluster "$ECS_CLUSTER" --service "$ECS_SERVICE"
+          --force-new-deployment > /dev/null
+
+      - name: Wait for the deployment to become stable
+        run: aws ecs wait services-stable --cluster "$ECS_CLUSTER" --services "$ECS_SERVICE"
+
+      - name: Smoke test
+        run: |
+          curl --fail --silent --show-error --retry 5 --retry-delay 5 \
+            "${{ vars.BACKEND_URL }}/health"
+          echo "Backend healthy: ${{ vars.BACKEND_URL }}/health"
